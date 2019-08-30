@@ -35,15 +35,12 @@ script:
 - make V=s
 - find $TRAVIS_BUILD_DIR/sdk/OpenWrt-SDK-*/bin/
 - find . -name *.ipk -exec cp {} $TRAVIS_BUILD_DIR \;
-before_deploy:
-  git fetch --tags
-deploy:
-  provider: releases
-  api_key:
-    secure: gsMBSA+i9AVqL6RHFOvavPHi/4y4zKTF/bm9j4ykRhS69EfRvhLifrDBBYjbICQYMBNmSG6AFOh6BxTvUC72vyFDt61/KWBoIRWX0044cQYhZT8qbfOveVwO1UxrJfsz8iPOto/GyZ5Vm2QhA28UTGHP8MT+Px/NjQKzGTRohyU=
-  skip_cleanup: true
-  file_glob: true
-  file: $TRAVIS_BUILD_DIR/*.ipk
-  on:
-    tags: true
-    all_branches: true
+
+after_success:
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash upload.sh $TRAVIS_BUILD_DIR/*.ipk
+
+branches:
+  except:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - /^(?i:continuous.*)$/
