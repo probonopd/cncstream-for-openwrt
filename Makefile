@@ -6,7 +6,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=srss
+PKG_NAME:=cncstream
 PKG_VERSION:=1.0
 PKG_RELEASE:=1
 
@@ -16,18 +16,18 @@ include $(INCLUDE_DIR)/package.mk
 
 PKG_BUILD_DEPENDS:= +libc
 
-define Package/srss
+define Package/cncstream
   SUBMENU:=Utilities
   SECTION:=utils
   CATEGORY:=Utilities
-  TITLE:=Calculate sunrise and sunset times 
-  URL:=https://github.com/probonopd/srss-for-openwrt
+  TITLE:=Stream GCode to GRBL
+  URL:=https://github.com/probonopd/cncstream-for-openwrt
   DEPENDS:= +libc
 endef
 
-define Package/srss/description
-  Calculate sunrise and sunset times.
-  This can be useful for scripting home automation applications, such as lighting.
+define Package/cncstream/description
+  Stream GCode to GRBL.
+  This can be useful for sending GCode to 3D printers and CNC machines.
 endef
 
 define Build/Prepare
@@ -38,9 +38,9 @@ endef
 define Build/Configure
 endef
 
-define Package/srss/install
+define Package/cncstream/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/srss $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/cncstream $(1)/usr/bin/
 endef
 
-$(eval $(call BuildPackage,srss))
+$(eval $(call BuildPackage,cncstream))
